@@ -53,6 +53,7 @@
 		50EF629917ECD46A001EB2F8 /* Icon-100.png in Resources */ = {isa = PBXBuildFile; fileRef = 50EF629517ECD46A001EB2F8 /* Icon-100.png */; };
 		50EF62A217ECD613001EB2F8 /* Icon-29.png in Resources */ = {isa = PBXBuildFile; fileRef = 50EF62A017ECD613001EB2F8 /* Icon-29.png */; };
 		50EF62A317ECD613001EB2F8 /* Icon-50.png in Resources */ = {isa = PBXBuildFile; fileRef = 50EF62A117ECD613001EB2F8 /* Icon-50.png */; };
+		511686531F2CF2970008338B /* point.png in Resources */ = {isa = PBXBuildFile; fileRef = 511686521F2CF2970008338B /* point.png */; };
 		511B99F61F2C747200AE6BA5 /* FishLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 511B99F41F2C747200AE6BA5 /* FishLayer.cpp */; };
 		511B99FA1F2C748300AE6BA5 /* FishManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 511B99F81F2C748300AE6BA5 /* FishManager.cpp */; };
 		511B99FD1F2C74DF00AE6BA5 /* FishSprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 511B99FB1F2C74DF00AE6BA5 /* FishSprite.cpp */; };
@@ -169,6 +170,7 @@
 		50EF629517ECD46A001EB2F8 /* Icon-100.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-100.png"; sourceTree = "<group>"; };
 		50EF62A017ECD613001EB2F8 /* Icon-29.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-29.png"; sourceTree = "<group>"; };
 		50EF62A117ECD613001EB2F8 /* Icon-50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-50.png"; sourceTree = "<group>"; };
+		511686521F2CF2970008338B /* point.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = point.png; sourceTree = "<group>"; };
 		511B99F41F2C747200AE6BA5 /* FishLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FishLayer.cpp; sourceTree = "<group>"; };
 		511B99F51F2C747200AE6BA5 /* FishLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FishLayer.h; sourceTree = "<group>"; };
 		511B99F81F2C748300AE6BA5 /* FishManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FishManager.cpp; sourceTree = "<group>"; };
@@ -329,6 +331,7 @@
 		46880B7519C43A67006E1F66 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				511686521F2CF2970008338B /* point.png */,
 				66C80F5D1F2C34E00084248C /* button1.png */,
 				66C80F5E1F2C34E00084248C /* button2.png */,
 				66BE6BEE1F2B86780025D857 /* bg.jpg */,
@@ -532,6 +535,7 @@
 				50EF629917ECD46A001EB2F8 /* Icon-100.png in Resources */,
 				5087E78317EB970100C73F5D /* Icon-152.png in Resources */,
 				46880B8119C43A67006E1F66 /* HelloWorld.png in Resources */,
+				511686531F2CF2970008338B /* point.png in Resources */,
 				46880B7D19C43A67006E1F66 /* CloseSelected.png in Resources */,
 				5087E77D17EB970100C73F5D /* Default-568h@2x.png in Resources */,
 				5087E78517EB970100C73F5D /* Icon-72.png in Resources */,

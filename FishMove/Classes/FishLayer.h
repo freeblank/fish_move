@@ -4,6 +4,7 @@
 //
 //  Created by FreeBlank on 17/7/29.
 //
+// all fish will add into the layer, change it with listener event from editor
 //
 
 #ifndef FishLayer_h

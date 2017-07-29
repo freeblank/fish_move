@@ -4,6 +4,7 @@
 //
 //  Created by FreeBlank on 17/7/29.
 //
+//  fish create and update logic
 //
 
 #ifndef FishSprite_h

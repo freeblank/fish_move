@@ -2,7 +2,7 @@
 //  MainScene.cpp
 //  FishMove
 //
-//  Created by pClass on 17/7/28.
+//  Created by FreeBlank on 17/7/28.
 //
 //
 
@@ -27,7 +27,7 @@ void MainScene::initUI() {
     Sprite *i_bg = Sprite::create("bg.jpg");
     i_bg->setAnchorPoint(Vec2(0, 0));
     i_bg->setPosition(Vec2(0, 0));
-    this->addChild(i_bg, 0);
+    addChild(i_bg, 0);
     
     ui::Button *i_button = cocos2d::ui::Button::create("button1.png");
     i_button->setScale9Enabled(true);
@@ -41,13 +41,13 @@ void MainScene::initUI() {
     
     i_button->setPosition(Vec2(1050, 580));
     i_button->setTitleColor(Color3B::BLACK);
-    this->addChild(i_button, 0);
+    addChild(i_button, 0);
     
     editorLayer = EditorLayer::create();
-    this->addChild(editorLayer, 1);
+    addChild(editorLayer, 1);
     editorLayer->setVisible(false);
     
     fishLayer = FishLayer::create();
-    this->addChild(fishLayer, 2);
+    addChild(fishLayer, 2);
     
 }

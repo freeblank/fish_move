@@ -18,7 +18,7 @@ void FishSprite::setType(FishType type) {
     char str[100] = {0};
     sprintf(str, "fish_%04d_%d_%02d.png",type/10, type%10, 0);
     
-    this->setSpriteFrame(str);
+    setSpriteFrame(str);
     
     Vector<SpriteFrame*> spriteFrames;
     for (int i=0; i<100; i++) {
@@ -33,5 +33,5 @@ void FishSprite::setType(FishType type) {
     if (spriteFrames.size() <= 0) return;
     
     Animation *animation = Animation::createWithSpriteFrames(spriteFrames);
-    this->runAction(RepeatForever::create(Animate::create(animation)));
+    runAction(RepeatForever::create(Animate::create(animation)));
 }

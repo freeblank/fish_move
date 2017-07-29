@@ -15,17 +15,17 @@ bool FishLayer::init()
     
     FishSprite* i_fish = FishManager::getInstance()->addFish();
     i_fish->setPosition(Vec2(200, 200));
-    this->addChild(i_fish);
+    addChild(i_fish);
     return true;
 }
 
 void FishLayer::addEventListener() {
     _eventDispatcher->addCustomEventListener("Editor_Update_Move", [=](EventCustom * custom){
-        this->onUpdateMove((BaseMove *)custom->getUserData());
+        onUpdateMove((BaseMove *)custom->getUserData());
     });
     
     _eventDispatcher->addCustomEventListener("Editor_Finish", [=](EventCustom*){
-        this->onEditorFinish();
+        onEditorFinish();
     });
 }
 

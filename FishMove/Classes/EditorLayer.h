@@ -2,8 +2,9 @@
 //  EditorLayer.h
 //  FishMove
 //
-//  Created by pClass on 17/7/29.
+//  Created by FreeBlank on 17/7/29.
 //
+//  a editor to load and change the path which fishes move along
 //
 
 #ifndef EditorLayer_h
@@ -35,6 +36,12 @@ public:
     virtual bool init();
     CREATE_FUNC(EditorLayer);
     
+    virtual void onEnter();
+    
+    virtual bool onTouchBegan(Touch *touch, Event *unused_event);
+    virtual void onTouchMoved(Touch *touch, Event *unused_event);
+    virtual void onTouchEnded(Touch *touch, Event *unused_event);
+    
 private:
     void initUI();
     void onClickButton(ButtonTag tag);
@@ -42,10 +49,22 @@ private:
     Button* createButton(ButtonType type);
     void showParamtric(bool show);
     void showPolar(bool show);
+    
+    void cleanEditor();
+    
+    void addPoint(Vec2 pos, int tag=-1);
+    void movePoint(Button *button, Vec2 pos);
+    
+    void loadPoints();
+    void savePoints();
 private:
     ButtonTag _selectTag;
-    Layer *layerParamtric;
-    Layer *layerPolar;
+    Layer *_layerParamtric;
+    Layer *_layerPolar;
+    Layer *_layerPoint;
+    
+    std::vector<Point> _points;
+    DrawNode *_drawNode;
 };
 
 #endif /* EditorLayer_h */

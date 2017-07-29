@@ -4,6 +4,7 @@
 //
 //  Created by FreeBlank on 17/7/29.
 //
+//  All fish will create or remove by FishManager. the fish will not remove when it was deleted, just invisible, and reuse when need a fish.
 //
 
 #ifndef FishManager_h
