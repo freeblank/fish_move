@@ -12,6 +12,8 @@
 
 #include <stdio.h>
 #include "BaseMove.h"
+#include "FishManager.h"
+#include "FishCreator.h"
 
 using namespace cocos2d;
 
@@ -23,12 +25,14 @@ public:
     virtual void update(float delta);
     void addEventListener();
     
-private:
-    void onUpdateMove(BaseMove *move);
-    void onEditorFinish();
+    void setEditable(bool editable) { _editable = editable; }
+    void clear();
     
 private:
-    BaseMove *_move;
+    void onEditorFinish(MoveType type);
+    
+private:
     bool _editable;
+    std::vector<FishCreator*> _fishCreators;
 };
 #endif /* FishLayer_h */

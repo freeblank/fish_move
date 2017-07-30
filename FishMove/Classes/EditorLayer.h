@@ -12,19 +12,11 @@
 
 #include <stdio.h>
 #include "ui/CocosGUI.h"
+#include "BaseMove.h"
+#include "FishManager.h"
 
 using namespace cocos2d;
 using namespace ui;
-
-typedef enum _button_tag
-{
-    Button_Null = 0,
-    Button_StraightLine,
-    Button_Lagrange,
-    Button_Bezier,
-    Button_Paramtric,
-    Button_Polar
-} ButtonTag;
 
 typedef enum _button_type {
     Button_Blue = 1,
@@ -33,6 +25,8 @@ typedef enum _button_type {
 
 class EditorLayer : public LayerColor {
 public:
+    ~EditorLayer();
+    
     virtual bool init();
     CREATE_FUNC(EditorLayer);
     
@@ -42,9 +36,11 @@ public:
     virtual void onTouchMoved(Touch *touch, Event *unused_event);
     virtual void onTouchEnded(Touch *touch, Event *unused_event);
     
+    void show(bool i_show);
+    
 private:
     void initUI();
-    void onClickButton(ButtonTag tag);
+    void onClickButton(MoveType tag);
     
     Button* createButton(ButtonType type);
     void showParamtric(bool show);
@@ -55,16 +51,18 @@ private:
     void addPoint(Vec2 pos, int tag=-1);
     void movePoint(Button *button, Vec2 pos);
     
-    void loadPoints();
-    void savePoints();
+    void refreshFishes();
 private:
-    ButtonTag _selectTag;
+    MoveType _selectMoveType;
     Layer *_layerParamtric;
     Layer *_layerPolar;
     Layer *_layerPoint;
     
     std::vector<Point> _points;
     DrawNode *_drawNode;
+    BaseMove *_move;
+    
+    bool _haveChange;
 };
 
 #endif /* EditorLayer_h */

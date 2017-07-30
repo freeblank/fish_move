@@ -11,6 +11,7 @@
 #define FishSprite_h
 
 #include <stdio.h>
+#include "BaseMove.h"
 
 using namespace cocos2d;
 
@@ -29,8 +30,16 @@ public:
     void setType(FishType type);
     FishType getFishType() { return _type; }
     
-private:
+    void bindMove(BaseMove *move);
+    void updateMove(float delta);
+    bool isEnd();
+    
+public:
+    bool lockForEditor;
+
+protected:
     FishType _type;
+    BaseMove *_move;
 };
 
 #endif /* FishSprite_h */

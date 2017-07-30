@@ -7,15 +7,24 @@
 //
 
 #include "EditorLayer.h"
-
+#include "StraightLineMove.h"
 
 bool EditorLayer::init() {
     if (!LayerColor::initWithColor(Color4B::BLACK)) return false;
     
-    _selectTag = Button_Null;
+    _selectMoveType = MoveType_Null;
+    _move = nullptr;
     
     initUI();
     return true;
+}
+
+EditorLayer::~EditorLayer()
+{
+    if (_move) {
+        delete _move;
+        _move = nullptr;
+    }
 }
 
 void EditorLayer::initUI() {
@@ -24,14 +33,14 @@ void EditorLayer::initUI() {
     float i_step = 100;
     Button *i_button = createButton(Button_Blue);
     i_button->setPosition(Vec2(i_x, i_y));
-    i_button->setTag(Button_StraightLine);
+    i_button->setTag(MoveType_StraightLine);
     i_button->setTitleText("StraightLine");
     addChild(i_button);
     i_y += i_step;
     
     i_button = createButton(Button_Blue);
     i_button->setPosition(Vec2(i_x, i_y));
-    i_button->setTag(Button_Lagrange);
+    i_button->setTag(MoveType_Lagrange);
     i_button->setTitleText("Lagrange");
     addChild(i_button);
     i_y += i_step;
@@ -39,21 +48,21 @@ void EditorLayer::initUI() {
     
     i_button = createButton(Button_Blue);
     i_button->setPosition(Vec2(i_x, i_y));
-    i_button->setTag(Button_Bezier);
+    i_button->setTag(MoveType_Bezier);
     i_button->setTitleText("Bezier");
     addChild(i_button);
     i_y += i_step;
     
     i_button = createButton(Button_Blue);
     i_button->setPosition(Vec2(i_x, i_y));
-    i_button->setTag(Button_Paramtric);
+    i_button->setTag(MoveType_Paramtric);
     i_button->setTitleText("Paramtric");
     addChild(i_button);
     i_y += i_step;
     
     i_button = createButton(Button_Blue);
     i_button->setPosition(Vec2(i_x, i_y));
-    i_button->setTag(Button_Polar);
+    i_button->setTag(MoveType_Polar);
     i_button->setTitleText("Polar");
     addChild(i_button);
     i_y += i_step;
@@ -62,7 +71,13 @@ void EditorLayer::initUI() {
     i_button->setPosition(Vec2(800, 40));
     i_button->setTitleText("Finish");
     i_button->addClickEventListener([=](Ref*){
-        setVisible(false);
+        show(false);
+        
+        if (_haveChange) {
+            _eventDispatcher->dispatchCustomEvent("Editor_Finish", &_selectMoveType);
+        } else {
+            _eventDispatcher->dispatchCustomEvent("Editor_Finish_No_Change", &_selectMoveType);
+        }
     });
     addChild(i_button);
     
@@ -83,9 +98,6 @@ void EditorLayer::initUI() {
     
     _drawNode = DrawNode::create();
     addChild(_drawNode, 10);
-    
-    
-    onClickButton(Button_StraightLine);
 }
 
 Button* EditorLayer::createButton(ButtonType type) {
@@ -105,10 +117,23 @@ Button* EditorLayer::createButton(ButtonType type) {
     {
         i_button->addClickEventListener([=](Ref *ref){
             Button* button = dynamic_cast<Button *>(ref);
-            onClickButton((ButtonTag)button->getTag());
+            onClickButton((MoveType)button->getTag());
         });
     }
     return i_button;
+}
+
+void EditorLayer::show(bool i_show) {
+    if (i_show) {
+        _haveChange = false;
+        FishManager::getInstance()->lockAllFishesForEditor();
+        onClickButton(MoveType_StraightLine);
+        setVisible(true);
+    } else {
+        FishManager::getInstance()->removeAllFish();
+        FishManager::getInstance()->unlockAllFishes();
+        setVisible(false);
+    }
 }
 
 void EditorLayer::cleanEditor() {
@@ -120,32 +145,33 @@ void EditorLayer::cleanEditor() {
     _drawNode->clear();
 }
 
-void EditorLayer::onClickButton(ButtonTag tag) {
-    _selectTag = tag;
+void EditorLayer::onClickButton(MoveType tag) {
+    _selectMoveType = tag;
     
     cleanEditor();
     
     switch (tag) {
-        case Button_StraightLine:
+        case MoveType_StraightLine:
             break;
-        case Button_Lagrange:
+        case MoveType_Lagrange:
             break;
-        case Button_Bezier:
+        case MoveType_Bezier:
             break;
-        case Button_Paramtric:
+        case MoveType_Paramtric:
             showParamtric(true);
             break;
-        case Button_Polar:
+        case MoveType_Polar:
             showPolar(true);
             break;
         default:
             break;
     }
     
-    loadPoints();
+    FishManager::getInstance()->loadPoints(_selectMoveType, _points);
     for (int i=0; i<_points.size(); ++i) {
         addPoint(_points[i], i);
     }
+    refreshFishes();
 }
 
 void EditorLayer::showPolar(bool show) {
@@ -154,6 +180,32 @@ void EditorLayer::showPolar(bool show) {
 
 void EditorLayer::showParamtric(bool show) {
     
+}
+
+void EditorLayer::refreshFishes() {
+    FishManager::getInstance()->removeAllFish();
+    
+    switch (_selectMoveType) {
+        case MoveType_StraightLine:
+            _move = new StraightLineMove();
+            dynamic_cast<StraightLineMove*>(_move)->setPoints(_points);
+            break;
+            
+        default:
+            break;
+    }
+    
+    if (!_move) return;
+    
+    float i_total_time = 10;
+    _move->setTotalTime(i_total_time);
+    for (int i=0; i<4; i++)
+    {
+        _move->next(i_total_time/5);
+        FishSprite* i_fish = FishManager::getInstance()->addFish();
+        i_fish->setPosition(_move->getCurPos());
+        i_fish->setRotation(180-_move->getAngle());
+    }
 }
 
 void EditorLayer::movePoint(Button *button, Vec2 pos) {
@@ -185,58 +237,20 @@ void EditorLayer::addPoint(Vec2 pos, int tag) {
     i_button->addTouchEventListener([=](Ref* ref,Widget::TouchEventType type) {
         Button *button = dynamic_cast<Button *>(ref);
         if (type == Widget::TouchEventType::MOVED) {
-            movePoint(button, button->getTouchMovePosition());
+            this->movePoint(button, button->getTouchMovePosition());
         } else if (type == Widget::TouchEventType::ENDED) {
-            movePoint(button, button->getTouchEndPosition());
-            savePoints();
+            this->movePoint(button, button->getTouchEndPosition());
+            FishManager::getInstance()->savePoints(_selectMoveType, _points);
+            this->refreshFishes();
+            
+            _haveChange = true;
         }
     });
     
     _layerPoint->addChild(i_button);
 }
 
-void EditorLayer::loadPoints() {
-    if (_selectTag==Button_Null) return;
-    
-    _points.clear();
-    
-    std::stringstream ss_key;
-    ss_key<<"Point_"<<_selectTag;
-    std::string str_value = UserDefault::getInstance()->getStringForKey(ss_key.str().c_str());
-    
-    std::stringstream ss_value(str_value);
-    std::string i_temp;
-    std::string pos_x = "";
-    std::string pos_y = "";
-    while (ss_value>>pos_x>>pos_y) {
-        Point pos;
-        pos.x = atof(pos_x.c_str());
-        pos.y = atof(pos_y.c_str());
-        
-        _points.push_back(pos);
-        pos_x = "";
-        pos_y = "";
-    }
 
-    if (_points.size() <= 0)
-    {
-        _points.push_back(Vec2(200, 320));
-        _points.push_back(Vec2(700, 320));
-    }
-}
-
-void EditorLayer::savePoints() {
-    if (_selectTag==Button_Null || _points.size()<=0) return;
-    
-    std::stringstream ss_value;
-    for (std::vector<Point>::iterator it=_points.begin(); it!=_points.end(); ++it) {
-        ss_value<<(*it).x<<" "<<(*it).y<<" ";
-    }
-    
-    std::stringstream ss_key;
-    ss_key<<"Point_"<<_selectTag;
-    UserDefault::getInstance()->setStringForKey(ss_key.str().c_str(), ss_value.str().c_str());
-}
 
 void EditorLayer::onEnter()
 {

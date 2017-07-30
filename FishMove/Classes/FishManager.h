@@ -15,6 +15,16 @@
 
 using namespace cocos2d;
 
+typedef enum _move_type
+{
+    MoveType_Null = 0,
+    MoveType_StraightLine,
+    MoveType_Lagrange,
+    MoveType_Bezier,
+    MoveType_Paramtric,
+    MoveType_Polar
+} MoveType;
+
 class FishManager {
 public:
     static FishManager* getInstance();
@@ -22,12 +32,23 @@ public:
     FishManager();
     ~FishManager();
     
+    void setLayer(Layer *layer);
+    
     FishSprite* addFish(FishType type=FishType_Small);
     void removeFish(FishSprite *fish);
     void removeAllFish();
     
+    void lockAllFishesForEditor();
+    void unlockAllFishes();
+    
+    void updateMove(float delta);
+    const std::string getMoveTypeKey(MoveType type);
+    void loadPoints(MoveType type, std::vector<Point> &points);
+    void savePoints(MoveType type, const std::vector<Point> &points);
+    
 private:
     std::vector<FishSprite *> _fishes;
+    Layer *_layerFish;
 };
 
 #endif /* FishManager_h */
