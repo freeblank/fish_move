@@ -8,6 +8,7 @@
 
 #include "EditorLayer.h"
 #include "StraightLineMove.h"
+#include "BezierCurveMove.h"
 
 bool EditorLayer::init() {
     if (!LayerColor::initWithColor(Color4B::BLACK)) return false;
@@ -28,22 +29,22 @@ EditorLayer::~EditorLayer()
 }
 
 void EditorLayer::initUI() {
-    float i_x = 1020;
-    float i_y = 40;
-    float i_step = 100;
+    float i_x = 150;
+    float i_y = 600;
+    float i_step = 210;
     Button *i_button = createButton(Button_Blue);
     i_button->setPosition(Vec2(i_x, i_y));
     i_button->setTag(MoveType_StraightLine);
     i_button->setTitleText("StraightLine");
     addChild(i_button);
-    i_y += i_step;
+    i_x += i_step;
     
     i_button = createButton(Button_Blue);
     i_button->setPosition(Vec2(i_x, i_y));
     i_button->setTag(MoveType_Lagrange);
     i_button->setTitleText("Lagrange");
     addChild(i_button);
-    i_y += i_step;
+    i_x += i_step;
     
     
     i_button = createButton(Button_Blue);
@@ -51,24 +52,24 @@ void EditorLayer::initUI() {
     i_button->setTag(MoveType_Bezier);
     i_button->setTitleText("Bezier");
     addChild(i_button);
-    i_y += i_step;
+    i_x += i_step;
     
     i_button = createButton(Button_Blue);
     i_button->setPosition(Vec2(i_x, i_y));
     i_button->setTag(MoveType_Paramtric);
     i_button->setTitleText("Paramtric");
     addChild(i_button);
-    i_y += i_step;
+    i_x += i_step;
     
     i_button = createButton(Button_Blue);
     i_button->setPosition(Vec2(i_x, i_y));
     i_button->setTag(MoveType_Polar);
     i_button->setTitleText("Polar");
     addChild(i_button);
-    i_y += i_step;
+    i_x += i_step;
     
     i_button = createButton(Button_Yellow);
-    i_button->setPosition(Vec2(800, 40));
+    i_button->setPosition(Vec2(1020, 40));
     i_button->setTitleText("Finish");
     i_button->addClickEventListener([=](Ref*){
         show(false);
@@ -185,12 +186,23 @@ void EditorLayer::showParamtric(bool show) {
 void EditorLayer::refreshFishes() {
     FishManager::getInstance()->removeAllFish();
     
+    if (_move) {
+        delete _move;
+        _move = nullptr;
+    }
+    
+    int i_total_num = 5;
     switch (_selectMoveType) {
         case MoveType_StraightLine:
             _move = new StraightLineMove();
             dynamic_cast<StraightLineMove*>(_move)->setPoints(_points);
+            i_total_num = 5;
             break;
-            
+        case MoveType_Bezier:
+            _move = new BezierCurveMove();
+            dynamic_cast<BezierCurveMove*>(_move)->setPoints(_points);
+            i_total_num = 20;
+            break;
         default:
             break;
     }
@@ -199,9 +211,9 @@ void EditorLayer::refreshFishes() {
     
     float i_total_time = 10;
     _move->setTotalTime(i_total_time);
-    for (int i=0; i<4; i++)
+    for (int i=0; i<i_total_num; i++)
     {
-        _move->next(i_total_time/5);
+        _move->next(i_total_time/(i_total_num+1));
         FishSprite* i_fish = FishManager::getInstance()->addFish();
         i_fish->setPosition(_move->getCurPos());
         i_fish->setRotation(180-_move->getAngle());
@@ -220,20 +232,21 @@ void EditorLayer::movePoint(Button *button, Vec2 pos) {
 }
 
 void EditorLayer::addPoint(Vec2 pos, int tag) {
-    if (tag < 0)
-    {
+    if (tag < 0) {
         tag = (int)_points.size();
         _points.push_back(pos);
     }
     _drawNode->drawPoint(pos, 5, Color4F::RED);
     
+    float button_size = 80;
+    
     Button *i_button = Button::create("point.png");
     i_button->setAnchorPoint(Vec2(0.5, 0.5));
     i_button->setPosition(pos);
-    i_button->setScale(80);
+    i_button->setScale(button_size);
     i_button->setTag(tag);
     i_button->setColor(Color3B::BLUE);
-    i_button->setOpacity(50);
+//    i_button->setOpacity(50);
     i_button->addTouchEventListener([=](Ref* ref,Widget::TouchEventType type) {
         Button *button = dynamic_cast<Button *>(ref);
         if (type == Widget::TouchEventType::MOVED) {
@@ -246,14 +259,19 @@ void EditorLayer::addPoint(Vec2 pos, int tag) {
             _haveChange = true;
         }
     });
-    
     _layerPoint->addChild(i_button);
+    
+    Text *i_text = Text::create();
+    std::stringstream ss;
+    ss<<(tag+1);
+    i_text->setString(ss.str());
+    i_text->setScale(1/button_size);
+    i_button->addChild(i_text);
 }
 
 
 
-void EditorLayer::onEnter()
-{
+void EditorLayer::onEnter() {
     Layer::onEnter();
     
     // Register Touch Event
@@ -271,6 +289,11 @@ bool EditorLayer::onTouchBegan(cocos2d::Touch *touch, cocos2d::Event *unused_eve
     cocos2d::log("onTouchBegan");
     
     if (!isVisible()) return false;
+    
+    if (_selectMoveType == MoveType_Bezier) {
+        addPoint(touch->getLocation());
+    }
+    
     return true;
 }
 
