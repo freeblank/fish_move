@@ -15,8 +15,6 @@
 
 using namespace cocos2d;
 
-const float create_distance = 80.0f;
-
 class FishCreator {
 public:
     FishCreator(MoveType type, int totalNum=-1);

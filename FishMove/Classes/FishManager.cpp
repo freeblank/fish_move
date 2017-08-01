@@ -146,13 +146,18 @@ void FishManager::loadPoints(MoveType type, std::vector<Point> &points) {
 }
 
 void FishManager::savePoints(MoveType type, const std::vector<Point> &points) {
-    if (type==MoveType_Null || points.size()<=0) return;
+    if (type==MoveType_Null) return;
+    
+    std::string i_key = FishManager::getInstance()->getMoveTypeKey(type);
+    if (points.size()<=0) {
+        UserDefault::getInstance()->setStringForKey(i_key.c_str(), "");
+        return;
+    }
     
     std::stringstream ss_value;
     for (std::vector<Point>::const_iterator it=points.begin(); it!=points.end(); ++it) {
         ss_value<<(*it).x<<" "<<(*it).y<<" ";
     }
     
-    std::string i_key = FishManager::getInstance()->getMoveTypeKey(type);
     UserDefault::getInstance()->setStringForKey(i_key.c_str(), ss_value.str().c_str());
 }

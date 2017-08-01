@@ -69,6 +69,16 @@ void EditorLayer::initUI() {
     i_x += i_step;
     
     i_button = createButton(Button_Yellow);
+    i_button->setPosition(Vec2(800, 40));
+    i_button->setTitleText("Reset");
+    i_button->addClickEventListener([=](Ref*){
+        _points.clear();
+        FishManager::getInstance()->savePoints(_selectMoveType, _points);
+        onClickButton(_selectMoveType);
+    });
+    addChild(i_button);
+    
+    i_button = createButton(Button_Yellow);
     i_button->setPosition(Vec2(1020, 40));
     i_button->setTitleText("Finish");
     i_button->addClickEventListener([=](Ref*){
@@ -211,12 +221,21 @@ void EditorLayer::refreshFishes() {
     
     float i_total_time = 10;
     _move->setTotalTime(i_total_time);
-    for (int i=0; i<i_total_num; i++)
+    Point prePos = Point::ZERO;
+    Point curPos = Point::ZERO;
+    float i_dis = 0;
+    while(!_move->isEnd())
     {
-        _move->next(i_total_time/(i_total_num+1));
         FishSprite* i_fish = FishManager::getInstance()->addFish();
         i_fish->setPosition(_move->getCurPos());
         i_fish->setRotation(180-_move->getAngle());
+        
+        prePos = _move->getCurPos();
+        do {
+            _move->next(1/60.0);
+            curPos = _move->getCurPos();
+            i_dis = (curPos.x-prePos.x)*(curPos.x-prePos.x) + (curPos.y-prePos.y)*(curPos.y-prePos.y);
+        } while (!_move->isEnd() && i_dis<5000);
     }
 }
 
@@ -292,6 +311,11 @@ bool EditorLayer::onTouchBegan(cocos2d::Touch *touch, cocos2d::Event *unused_eve
     
     if (_selectMoveType == MoveType_Bezier) {
         addPoint(touch->getLocation());
+        
+        FishManager::getInstance()->savePoints(_selectMoveType, _points);
+        this->refreshFishes();
+        
+        _haveChange = true;
     }
     
     return true;

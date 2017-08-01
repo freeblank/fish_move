@@ -60,6 +60,8 @@
 		511B9A031F2C76A000AE6BA5 /* StraightLineMove.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 511B9A011F2C76A000AE6BA5 /* StraightLineMove.cpp */; };
 		51A94E471F2DE4CA006AC129 /* FishCreator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 51A94E451F2DE4CA006AC129 /* FishCreator.cpp */; };
 		51A94E4A1F2E3029006AC129 /* BezierCurveMove.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 51A94E481F2E3029006AC129 /* BezierCurveMove.cpp */; };
+		51B1C36B1F30DE2B00EBD72B /* BaseMove.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 51B1C36A1F30DE2B00EBD72B /* BaseMove.cpp */; };
+		51B1C3721F30EA9F00EBD72B /* LagrangeCurveMove.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 51B1C3701F30EA9F00EBD72B /* LagrangeCurveMove.cpp */; };
 		521A8E6419F0C34300D177D7 /* Default-667h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 521A8E6219F0C34300D177D7 /* Default-667h@2x.png */; };
 		521A8E6519F0C34300D177D7 /* Default-736h@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 521A8E6319F0C34300D177D7 /* Default-736h@3x.png */; };
 		521A8EA919F11F5000D177D7 /* fonts in Resources */ = {isa = PBXBuildFile; fileRef = 521A8EA819F11F5000D177D7 /* fonts */; };
@@ -185,6 +187,9 @@
 		51A94E461F2DE4CA006AC129 /* FishCreator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FishCreator.h; sourceTree = "<group>"; };
 		51A94E481F2E3029006AC129 /* BezierCurveMove.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BezierCurveMove.cpp; sourceTree = "<group>"; };
 		51A94E491F2E3029006AC129 /* BezierCurveMove.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BezierCurveMove.h; sourceTree = "<group>"; };
+		51B1C36A1F30DE2B00EBD72B /* BaseMove.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BaseMove.cpp; sourceTree = "<group>"; };
+		51B1C3701F30EA9F00EBD72B /* LagrangeCurveMove.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LagrangeCurveMove.cpp; sourceTree = "<group>"; };
+		51B1C3711F30EA9F00EBD72B /* LagrangeCurveMove.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LagrangeCurveMove.h; sourceTree = "<group>"; };
 		521A8E6219F0C34300D177D7 /* Default-667h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-667h@2x.png"; sourceTree = "<group>"; };
 		521A8E6319F0C34300D177D7 /* Default-736h@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-736h@3x.png"; sourceTree = "<group>"; };
 		521A8EA819F11F5000D177D7 /* fonts */ = {isa = PBXFileReference; lastKnownFileType = folder; path = fonts; sourceTree = "<group>"; };
@@ -372,8 +377,11 @@
 				511B99FB1F2C74DF00AE6BA5 /* FishSprite.cpp */,
 				511B99FC1F2C74DF00AE6BA5 /* FishSprite.h */,
 				511B99FF1F2C751400AE6BA5 /* BaseMove.h */,
+				51B1C36A1F30DE2B00EBD72B /* BaseMove.cpp */,
 				511B9A011F2C76A000AE6BA5 /* StraightLineMove.cpp */,
 				511B9A021F2C76A000AE6BA5 /* StraightLineMove.h */,
+				51B1C3701F30EA9F00EBD72B /* LagrangeCurveMove.cpp */,
+				51B1C3711F30EA9F00EBD72B /* LagrangeCurveMove.h */,
 				51A94E481F2E3029006AC129 /* BezierCurveMove.cpp */,
 				51A94E491F2E3029006AC129 /* BezierCurveMove.h */,
 			);
@@ -597,12 +605,14 @@
 				66C80F691F2C6DF70084248C /* EditorLayer.cpp in Sources */,
 				503AE10017EB989F00D1A890 /* AppController.mm in Sources */,
 				51A94E4A1F2E3029006AC129 /* BezierCurveMove.cpp in Sources */,
+				51B1C36B1F30DE2B00EBD72B /* BaseMove.cpp in Sources */,
 				511B99FA1F2C748300AE6BA5 /* FishManager.cpp in Sources */,
 				503AE10217EB989F00D1A890 /* RootViewController.mm in Sources */,
 				511B99F61F2C747200AE6BA5 /* FishLayer.cpp in Sources */,
 				503AE10117EB989F00D1A890 /* main.m in Sources */,
 				511B9A031F2C76A000AE6BA5 /* StraightLineMove.cpp in Sources */,
 				66BE6BEC1F2B7CB10025D857 /* MainScene.cpp in Sources */,
+				51B1C3721F30EA9F00EBD72B /* LagrangeCurveMove.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

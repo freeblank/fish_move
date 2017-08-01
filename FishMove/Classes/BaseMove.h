@@ -13,22 +13,25 @@
 #include <stdio.h>
 using namespace cocos2d;
 
+const float move_dis_min = 2;
+const float move_dis_max = 5;
+
 class BaseMove {
 public:
-    BaseMove() { _totalTime = 10; _curPos = Vec2::ZERO; }
+    BaseMove() { _totalTime = 10; _curPos = Vec2::ZERO; _prePos = Vec2::ZERO; _firstDis = 0; }
     virtual ~BaseMove() {}
     
     // the total time fish move along with the path from began to end will cost
     virtual void setTotalTime(float time) = 0;
     
     // the fish will move to the point at next step
-    virtual Point next(float delta) = 0;
+    virtual Point next(float delta, bool fix=false);
     
     // get the fish current position
     virtual Point getCurPos() { return _curPos; }
     
     // get angle of director the fish current move
-    virtual float getAngle() = 0;
+    virtual float getAngle();
     
     // check if the fish move at the end of path
     virtual bool isEnd() = 0;
@@ -36,6 +39,9 @@ public:
 protected:
     float _totalTime;
     Point _curPos;
+    Point _calcPos;
+    Point _prePos;
+    float _firstDis;
 };
 
 #endif /* BaseMove_h */

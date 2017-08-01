@@ -51,6 +51,10 @@ void FishCreator::update() {
     if (_totalNum>0 && _curNum>=_totalNum) return;
     if (!_curFish) return;
     
+    float create_distance = 80.0f;
+    if (_type == MoveType_Bezier) {
+        create_distance = 80.0f;
+    }
     Point i_pos = _curFish->getPosition();
     if (i_pos.getDistance(_initPos) >= create_distance) {
         createFish();

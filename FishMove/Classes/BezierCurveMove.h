@@ -15,8 +15,7 @@
 class BezierCurveMove : public BaseMove {
 public:
     virtual void setTotalTime(float time);
-    virtual Point next(float delta);
-    virtual float getAngle();
+    virtual Point next(float delta, bool fix=false);
     virtual bool isEnd();
     
     virtual void setPoints(const std::vector<Point> &points);
@@ -29,7 +28,7 @@ private:
     float step;
     float _curTime;
     std::vector<float> _combinations;
-    Point _prePos;
+    
 };
 
 #endif /* BezierCurveMove_h */
