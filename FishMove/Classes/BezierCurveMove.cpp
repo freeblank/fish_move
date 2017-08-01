@@ -48,6 +48,8 @@ bool BezierCurveMove::isEnd() {
 }
 
 void BezierCurveMove::setPoints(const std::vector<Point> &points) {
+    if (points.size() <= 0) return;
+    
     _points = points;
     
     _prePos = _points[0];

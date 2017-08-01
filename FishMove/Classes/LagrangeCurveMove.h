@@ -1,18 +1,18 @@
 //
-//  BezierCurveMove.h
+//  LagrangeCurveMove.h
 //  FishMove
 //
-//  Created by FreeBlank on 17/7/30.
+//  Created by FreeBlank on 17/8/2.
 //
 //
 
-#ifndef BezierCurveMove_h
-#define BezierCurveMove_h
+#ifndef LagrangeCurveMove_h
+#define LagrangeCurveMove_h
 
 #include <stdio.h>
 #include "BaseMove.h"
 
-class BezierCurveMove : public BaseMove {
+class LagrangeCurveMove : public BaseMove {
 public:
     virtual void setTotalTime(float time);
     virtual Point next(float delta, bool fix=false);
@@ -22,12 +22,11 @@ public:
     
 private:
     float getCombination(int i);
-
+    
 private:
     std::vector<Point> _points;
     float step;
     float _curTime;
-    std::vector<float> _combinations;
 };
 
-#endif /* BezierCurveMove_h */
+#endif /* LagrangeCurveMove_h */

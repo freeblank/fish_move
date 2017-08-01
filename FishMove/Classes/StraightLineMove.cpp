@@ -29,7 +29,7 @@ Point StraightLineMove::next(float delta, bool fix) {
 }
 
 bool StraightLineMove::isEnd() {
-    return (_pos[0].x-_pos[1].x)*(_curPos.x-_pos[1].x)<0 || (_pos[0].y-_pos[1].y)*(_curPos.y-_pos[1].y)<0;
+    return (_pos[0].x-_pos[1].x)*(_curPos.x-_pos[1].x)<=0 || (_pos[0].y-_pos[1].y)*(_curPos.y-_pos[1].y)<=0;
 }
 
 void StraightLineMove::setPoints(const std::vector<Point> &points) {

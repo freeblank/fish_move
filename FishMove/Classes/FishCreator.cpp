@@ -9,13 +9,14 @@
 #include "FishCreator.h"
 #include "StraightLineMove.h"
 #include "BezierCurveMove.h"
+#include "LagrangeCurveMove.h"
 
 FishCreator::FishCreator(MoveType type, int totalNum) {
     _type = type;
     _totalNum = totalNum;
     _curFish = nullptr;
     
-    if (_type == MoveType_StraightLine || _type == MoveType_Bezier) {
+    if (_type == MoveType_StraightLine || _type == MoveType_Bezier || _type == MoveType_Lagrange) {
         FishManager::getInstance()->loadPoints(_type, _points);
     }
     
@@ -32,6 +33,10 @@ void FishCreator::createFish() {
         case MoveType_Bezier:
             i_move = new BezierCurveMove();
             dynamic_cast<BezierCurveMove*>(i_move)->setPoints(_points);
+            break;
+        case MoveType_Lagrange:
+            i_move = new LagrangeCurveMove();
+            dynamic_cast<LagrangeCurveMove*>(i_move)->setPoints(_points);
             break;
         default:
             break;

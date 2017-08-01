@@ -9,6 +9,7 @@
 #include "EditorLayer.h"
 #include "StraightLineMove.h"
 #include "BezierCurveMove.h"
+#include "LagrangeCurveMove.h"
 
 bool EditorLayer::init() {
     if (!LayerColor::initWithColor(Color4B::BLACK)) return false;
@@ -201,17 +202,18 @@ void EditorLayer::refreshFishes() {
         _move = nullptr;
     }
     
-    int i_total_num = 5;
     switch (_selectMoveType) {
         case MoveType_StraightLine:
             _move = new StraightLineMove();
             dynamic_cast<StraightLineMove*>(_move)->setPoints(_points);
-            i_total_num = 5;
             break;
         case MoveType_Bezier:
             _move = new BezierCurveMove();
             dynamic_cast<BezierCurveMove*>(_move)->setPoints(_points);
-            i_total_num = 20;
+            break;
+        case MoveType_Lagrange:
+            _move = new LagrangeCurveMove();
+            dynamic_cast<LagrangeCurveMove*>(_move)->setPoints(_points);
             break;
         default:
             break;
@@ -309,7 +311,7 @@ bool EditorLayer::onTouchBegan(cocos2d::Touch *touch, cocos2d::Event *unused_eve
     
     if (!isVisible()) return false;
     
-    if (_selectMoveType == MoveType_Bezier) {
+    if (_selectMoveType == MoveType_Bezier || _selectMoveType == MoveType_Lagrange) {
         addPoint(touch->getLocation());
         
         FishManager::getInstance()->savePoints(_selectMoveType, _points);
