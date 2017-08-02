@@ -8,15 +8,21 @@
 
 #include "BezierCurveMove.h"
 
-void BezierCurveMove::setTotalTime(float time) {
-    if (time <= 0) return;
+BezierCurveMove::BezierCurveMove() {
+    _curTime = 0;
     
-    _totalTime = time;
-    step = 1.0/_totalTime;
+    setTotalTime(_totalTime);
+}
+
+bool BezierCurveMove::setTotalTime(float time) {
+    if (!BaseMove::setTotalTime(time)) return false;
+    
+    _step = 1.0/_totalTime;
+    return true;
 }
 
 Point BezierCurveMove::next(float delta, bool fix) {
-    _curTime += step*delta;
+    _curTime += _step*delta;
     
     int n = (int)_points.size()-1;
     if (_curTime >= 1) {
@@ -40,7 +46,7 @@ Point BezierCurveMove::next(float delta, bool fix) {
         k2 *= _curTime;
     }
     
-    return BaseMove::next(delta);
+    return BaseMove::next(delta, fix);
 }
 
 bool BezierCurveMove::isEnd() {
@@ -54,10 +60,6 @@ void BezierCurveMove::setPoints(const std::vector<Point> &points) {
     
     _prePos = _points[0];
     _curPos = _points[0];
-    _curTime = 0;
-    
-    setTotalTime(_totalTime);
-    next(1.0/60);
 }
 
 float BezierCurveMove::getCombination(int i) {

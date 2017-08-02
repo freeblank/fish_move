@@ -14,18 +14,15 @@
 
 class LagrangeCurveMove : public BaseMove {
 public:
-    virtual void setTotalTime(float time);
+    virtual bool setTotalTime(float time);
     virtual Point next(float delta, bool fix=false);
     virtual bool isEnd();
     
     virtual void setPoints(const std::vector<Point> &points);
     
 private:
-    float getCombination(int i);
-    
-private:
     std::vector<Point> _points;
-    float step;
+    float _step;
     float _curTime;
 };
 

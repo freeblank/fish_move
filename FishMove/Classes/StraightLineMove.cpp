@@ -8,14 +8,15 @@
 
 #include "StraightLineMove.h"
 
-void StraightLineMove::setTotalTime(float time) {
-    if (time <= 0) return;
+bool StraightLineMove::setTotalTime(float time) {
+    if (!BaseMove::setTotalTime(time)) return false;
     
-    _totalTime = time;
-    if (_pos[1].x==_pos[0].x && _pos[1].y==_pos[1].y) return;
+    if (_pos[1].x==_pos[0].x && _pos[1].y==_pos[1].y) return false;
     
     _step.x = 1.0/_totalTime*(_pos[1].x-_pos[0].x);
     _step.y = 1.0/_totalTime*(_pos[1].y-_pos[0].y);
+    
+    return true;
 }
 
 Point StraightLineMove::next(float delta, bool fix) {
@@ -25,7 +26,7 @@ Point StraightLineMove::next(float delta, bool fix) {
     _calcPos.x += _step.x*delta;
     _calcPos.y += _step.y*delta;
     
-    return BaseMove::next(delta);
+    return BaseMove::next(delta, fix);
 }
 
 bool StraightLineMove::isEnd() {
@@ -41,5 +42,4 @@ void StraightLineMove::setPoints(const std::vector<Point> &points) {
     _curPos = _pos[0];
     
     setTotalTime(_totalTime);
-    next(1.0f/60);
 }

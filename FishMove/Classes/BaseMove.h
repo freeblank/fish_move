@@ -18,11 +18,11 @@ const float move_dis_max = 5;
 
 class BaseMove {
 public:
-    BaseMove() { _totalTime = 10; _curPos = Vec2::ZERO; _prePos = Vec2::ZERO; _firstDis = 0; }
+    BaseMove();
     virtual ~BaseMove() {}
     
     // the total time fish move along with the path from began to end will cost
-    virtual void setTotalTime(float time) = 0;
+    virtual bool setTotalTime(float time);
     
     // the fish will move to the point at next step
     virtual Point next(float delta, bool fix=false);
@@ -42,6 +42,7 @@ protected:
     Point _calcPos;
     Point _prePos;
     float _firstDis;
+    float _fix_delta;
 };
 
 #endif /* BaseMove_h */

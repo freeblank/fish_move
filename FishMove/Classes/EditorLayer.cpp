@@ -10,6 +10,8 @@
 #include "StraightLineMove.h"
 #include "BezierCurveMove.h"
 #include "LagrangeCurveMove.h"
+#include "HeartMove.h"
+#include "LemniscateMove.h"
 
 bool EditorLayer::init() {
     if (!LayerColor::initWithColor(Color4B::BLACK)) return false;
@@ -62,12 +64,47 @@ void EditorLayer::initUI() {
     addChild(i_button);
     i_x += i_step;
     
+//    i_button = createButton(Button_Blue);
+//    i_button->setPosition(Vec2(i_x, i_y));
+//    i_button->setTag(MoveType_Polar);
+//    i_button->setTitleText("Polar");
+//    addChild(i_button);
+//    i_x += i_step;
+    
+    _layerParamtric = Layer::create();
+    addChild(_layerParamtric);
+    
+    i_y = 0;
+    i_step = 100;
+    
     i_button = createButton(Button_Blue);
-    i_button->setPosition(Vec2(i_x, i_y));
-    i_button->setTag(MoveType_Polar);
-    i_button->setTitleText("Polar");
+    i_button->setPosition(Vec2(0, i_y));
+    i_button->setTag(MoveType_Heart);
+    i_button->setTitleText("Heart");
     addChild(i_button);
-    i_x += i_step;
+    i_y += i_step;
+    
+    i_button = createButton(Button_Blue);
+    i_button->setPosition(Vec2(0, i_y));
+    i_button->setTag(MoveType_Lemniscate);
+    i_button->setTitleText("Lemniscate");
+    addChild(i_button);
+    i_y += i_step;
+    
+    i_button = createButton(Button_Blue);
+    i_button->setPosition(Vec2(0, i_y));
+    i_button->setTag(MoveType_Heart);
+    i_button->setTitleText("Test3");
+    addChild(i_button);
+    i_y += i_step;
+    
+    i_button = createButton(Button_Blue);
+    i_button->setPosition(Vec2(0, i_y));
+    i_button->setTag(MoveType_Heart);
+    i_button->setTitleText("Test4");
+    addChild(i_button);
+    i_y += i_step;
+    
     
     i_button = createButton(Button_Yellow);
     i_button->setPosition(Vec2(800, 40));
@@ -172,8 +209,6 @@ void EditorLayer::onClickButton(MoveType tag) {
         case MoveType_Paramtric:
             showParamtric(true);
             break;
-        case MoveType_Polar:
-            showPolar(true);
             break;
         default:
             break;
@@ -191,7 +226,9 @@ void EditorLayer::showPolar(bool show) {
 }
 
 void EditorLayer::showParamtric(bool show) {
-    
+    if (_layerParamtric) {
+        _layerParamtric->setVisible(show);
+    }
 }
 
 void EditorLayer::refreshFishes() {
@@ -214,6 +251,14 @@ void EditorLayer::refreshFishes() {
         case MoveType_Lagrange:
             _move = new LagrangeCurveMove();
             dynamic_cast<LagrangeCurveMove*>(_move)->setPoints(_points);
+            break;
+        case MoveType_Heart:
+            _move = new HeartMove();
+            dynamic_cast<HeartMove*>(_move)->setOrigin(_points[0]);
+            break;
+        case MoveType_Lemniscate:
+            _move = new LemniscateMove();
+            dynamic_cast<LemniscateMove*>(_move)->setOrigin(_points[0]);
             break;
         default:
             break;

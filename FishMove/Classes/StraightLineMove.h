@@ -14,7 +14,7 @@
 
 class StraightLineMove : public BaseMove {
 public:
-    virtual void setTotalTime(float time);
+    virtual bool setTotalTime(float time);
     virtual Point next(float delta, bool fix=false);
     virtual bool isEnd();
     

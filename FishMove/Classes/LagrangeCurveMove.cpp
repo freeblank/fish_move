@@ -8,18 +8,20 @@
 
 #include "LagrangeCurveMove.h"
 
-void LagrangeCurveMove::setTotalTime(float time) {
-    if (time <= 0) return;
+bool LagrangeCurveMove::setTotalTime(float time) {
+    if (!BaseMove::setTotalTime(time)) return false;
     
-    _totalTime = time;
-    step = (_points[_points.size()-1].x-_points[0].x)/_totalTime;
+    if (_points.size()<2) return false;
+    
+    _step = (_points[_points.size()-1].x-_points[0].x)/_totalTime;
+    return true;
 }
 
 Point LagrangeCurveMove::next(float delta, bool fix) {
     if (not fix) {
         _calcPos.x = _curPos.x;
     }
-    _calcPos.x += step*delta;
+    _calcPos.x += _step*delta;
     
     if ((_points[0].x-_points[_points.size()-1].x)*(_calcPos.x-_points[_points.size()-1].x)<=0) {
         _prePos = _curPos;
@@ -45,7 +47,7 @@ Point LagrangeCurveMove::next(float delta, bool fix) {
         _calcPos.y += _points[j].y*i_total_numerator/(_calcPos.x-_points[j].x)/i_total_denominator;
     }
     
-    return BaseMove::next(delta);
+    return BaseMove::next(delta, fix);
 }
 
 bool LagrangeCurveMove::isEnd() {
@@ -76,6 +78,5 @@ void LagrangeCurveMove::setPoints(const std::vector<Point> &points) {
     _curPos = _points[0];
     
     setTotalTime(_totalTime);
-    next(1.0/60);
 }
 

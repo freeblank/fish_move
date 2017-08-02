@@ -58,6 +58,9 @@
 		511B99FA1F2C748300AE6BA5 /* FishManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 511B99F81F2C748300AE6BA5 /* FishManager.cpp */; };
 		511B99FD1F2C74DF00AE6BA5 /* FishSprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 511B99FB1F2C74DF00AE6BA5 /* FishSprite.cpp */; };
 		511B9A031F2C76A000AE6BA5 /* StraightLineMove.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 511B9A011F2C76A000AE6BA5 /* StraightLineMove.cpp */; };
+		51A5A9961F321FFB00BF87F0 /* HeartMove.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 51A5A9941F321FFB00BF87F0 /* HeartMove.cpp */; };
+		51A5A99A1F323E0100BF87F0 /* LemniscateMove.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 51A5A9981F323E0100BF87F0 /* LemniscateMove.cpp */; };
+		51A5A99D1F323E5D00BF87F0 /* ParamtricMove.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 51A5A99B1F323E5D00BF87F0 /* ParamtricMove.cpp */; };
 		51A94E471F2DE4CA006AC129 /* FishCreator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 51A94E451F2DE4CA006AC129 /* FishCreator.cpp */; };
 		51A94E4A1F2E3029006AC129 /* BezierCurveMove.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 51A94E481F2E3029006AC129 /* BezierCurveMove.cpp */; };
 		51B1C36B1F30DE2B00EBD72B /* BaseMove.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 51B1C36A1F30DE2B00EBD72B /* BaseMove.cpp */; };
@@ -183,6 +186,12 @@
 		511B99FF1F2C751400AE6BA5 /* BaseMove.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseMove.h; sourceTree = "<group>"; };
 		511B9A011F2C76A000AE6BA5 /* StraightLineMove.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = StraightLineMove.cpp; sourceTree = "<group>"; };
 		511B9A021F2C76A000AE6BA5 /* StraightLineMove.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StraightLineMove.h; sourceTree = "<group>"; };
+		51A5A9941F321FFB00BF87F0 /* HeartMove.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = HeartMove.cpp; sourceTree = "<group>"; };
+		51A5A9951F321FFB00BF87F0 /* HeartMove.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HeartMove.h; sourceTree = "<group>"; };
+		51A5A9981F323E0100BF87F0 /* LemniscateMove.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LemniscateMove.cpp; sourceTree = "<group>"; };
+		51A5A9991F323E0100BF87F0 /* LemniscateMove.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LemniscateMove.h; sourceTree = "<group>"; };
+		51A5A99B1F323E5D00BF87F0 /* ParamtricMove.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ParamtricMove.cpp; sourceTree = "<group>"; };
+		51A5A99C1F323E5D00BF87F0 /* ParamtricMove.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ParamtricMove.h; sourceTree = "<group>"; };
 		51A94E451F2DE4CA006AC129 /* FishCreator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FishCreator.cpp; sourceTree = "<group>"; };
 		51A94E461F2DE4CA006AC129 /* FishCreator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FishCreator.h; sourceTree = "<group>"; };
 		51A94E481F2E3029006AC129 /* BezierCurveMove.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BezierCurveMove.cpp; sourceTree = "<group>"; };
@@ -376,14 +385,20 @@
 				51A94E461F2DE4CA006AC129 /* FishCreator.h */,
 				511B99FB1F2C74DF00AE6BA5 /* FishSprite.cpp */,
 				511B99FC1F2C74DF00AE6BA5 /* FishSprite.h */,
-				511B99FF1F2C751400AE6BA5 /* BaseMove.h */,
 				51B1C36A1F30DE2B00EBD72B /* BaseMove.cpp */,
+				511B99FF1F2C751400AE6BA5 /* BaseMove.h */,
 				511B9A011F2C76A000AE6BA5 /* StraightLineMove.cpp */,
 				511B9A021F2C76A000AE6BA5 /* StraightLineMove.h */,
 				51B1C3701F30EA9F00EBD72B /* LagrangeCurveMove.cpp */,
 				51B1C3711F30EA9F00EBD72B /* LagrangeCurveMove.h */,
 				51A94E481F2E3029006AC129 /* BezierCurveMove.cpp */,
 				51A94E491F2E3029006AC129 /* BezierCurveMove.h */,
+				51A5A9941F321FFB00BF87F0 /* HeartMove.cpp */,
+				51A5A9951F321FFB00BF87F0 /* HeartMove.h */,
+				51A5A9981F323E0100BF87F0 /* LemniscateMove.cpp */,
+				51A5A9991F323E0100BF87F0 /* LemniscateMove.h */,
+				51A5A99B1F323E5D00BF87F0 /* ParamtricMove.cpp */,
+				51A5A99C1F323E5D00BF87F0 /* ParamtricMove.h */,
 			);
 			name = Classes;
 			path = ../Classes;
@@ -601,6 +616,7 @@
 			files = (
 				511B99FD1F2C74DF00AE6BA5 /* FishSprite.cpp in Sources */,
 				51A94E471F2DE4CA006AC129 /* FishCreator.cpp in Sources */,
+				51A5A9961F321FFB00BF87F0 /* HeartMove.cpp in Sources */,
 				46880B8819C43A87006E1F66 /* AppDelegate.cpp in Sources */,
 				66C80F691F2C6DF70084248C /* EditorLayer.cpp in Sources */,
 				503AE10017EB989F00D1A890 /* AppController.mm in Sources */,
@@ -612,7 +628,9 @@
 				503AE10117EB989F00D1A890 /* main.m in Sources */,
 				511B9A031F2C76A000AE6BA5 /* StraightLineMove.cpp in Sources */,
 				66BE6BEC1F2B7CB10025D857 /* MainScene.cpp in Sources */,
+				51A5A99D1F323E5D00BF87F0 /* ParamtricMove.cpp in Sources */,
 				51B1C3721F30EA9F00EBD72B /* LagrangeCurveMove.cpp in Sources */,
+				51A5A99A1F323E0100BF87F0 /* LemniscateMove.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

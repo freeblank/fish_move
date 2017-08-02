@@ -22,7 +22,8 @@ typedef enum _move_type
     MoveType_Lagrange,
     MoveType_Bezier,
     MoveType_Paramtric,
-    MoveType_Polar
+    MoveType_Heart,
+    MoveType_Lemniscate
 } MoveType;
 
 class FishManager {

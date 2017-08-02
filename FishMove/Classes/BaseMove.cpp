@@ -8,9 +8,23 @@
 
 #include "BaseMove.h"
 
+BaseMove::BaseMove() {
+    _totalTime = 10;
+    _curPos = Vec2::ZERO;
+    _prePos = Vec2::ZERO;
+    _firstDis = 0;
+}
+
+bool BaseMove::setTotalTime(float time) {
+    if (time <= 0) return false;
+    
+    _totalTime = time;
+    return true;
+}
+
 Point BaseMove::next(float delta, bool fix) {
     float dis = (_calcPos.x-_curPos.x)*(_calcPos.x-_curPos.x) + (_calcPos.y-_curPos.y)*(_calcPos.y-_curPos.y);
-    if (fabsf(delta) > 0.001) {
+    if (fabsf(delta) > 0.0001) {
         if (dis < move_dis_min) {
             return next(0.5f * fabsf(delta), true);
         } else if (dis > move_dis_max) {
