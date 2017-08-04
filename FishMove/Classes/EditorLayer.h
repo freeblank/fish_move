@@ -43,7 +43,6 @@ private:
     void onClickButton(MoveType tag);
     
     Button* createButton(ButtonType type);
-    void showParamtric(bool show);
     void showPolar(bool show);
     
     void cleanEditor();
@@ -54,7 +53,6 @@ private:
     void refreshFishes();
 private:
     MoveType _selectMoveType;
-    Layer *_layerParamtric;
     Layer *_layerPolar;
     Layer *_layerPoint;
     

@@ -1,20 +1,20 @@
 //
-//  ParamtricMove.h
+//  PolarMove.h
 //  FishMove
 //
 //  Created by FreeBlank on 17/8/3.
 //
 //
 
-#ifndef ParamtricMove_h
-#define ParamtricMove_h
+#ifndef PolarMove_h
+#define PolarMove_h
 
 #include <stdio.h>
 #include "BaseMove.h"
 
-class ParamtricMove : public BaseMove {
+class PolarMove : public BaseMove {
 public:
-    ParamtricMove();
+    PolarMove();
     virtual bool setTotalTime(float time);
     virtual Point next(float delta, bool fix=false);
     virtual bool isEnd();
@@ -22,7 +22,8 @@ public:
     virtual void setOrigin(Vec2 origin);
     
 protected:
-    virtual Point getPosByTheta(float theta) = 0;
+    virtual float getRadius(float theta) = 0;
+    Point getPosByTheta(float theta);
     
 protected:
     Vec2 _origin;
@@ -30,4 +31,4 @@ protected:
     float _theta;
 };
 
-#endif /* ParamtricMove_h */
+#endif /* PolarMove_h */

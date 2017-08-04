@@ -12,6 +12,8 @@
 #include "LagrangeCurveMove.h"
 #include "HeartMove.h"
 #include "LemniscateMove.h"
+#include "SpiralMove.h"
+#include "RoseMove.h"
 
 FishCreator::FishCreator(MoveType type, int totalNum) {
     _type = type;
@@ -19,7 +21,7 @@ FishCreator::FishCreator(MoveType type, int totalNum) {
     _curFish = nullptr;
     
     if (_type == MoveType_StraightLine || _type == MoveType_Bezier || _type == MoveType_Lagrange
-        || _type == MoveType_Heart || _type == MoveType_Lemniscate) {
+        || _type == MoveType_Heart || _type == MoveType_Lemniscate || _type == MoveType_Spiral || _type == MoveType_Rose) {
         FishManager::getInstance()->loadPoints(_type, _points);
     }
     
@@ -48,6 +50,15 @@ void FishCreator::createFish() {
         case MoveType_Lemniscate:
             i_move = new LemniscateMove();
             dynamic_cast<LemniscateMove*>(i_move)->setOrigin(_points[0]);
+            break;
+        case MoveType_Spiral:
+            i_move = new SpiralMove();
+            dynamic_cast<SpiralMove*>(i_move)->setOrigin(_points[0]);
+            break;
+        case MoveType_Rose:
+            i_move = new RoseMove();
+            dynamic_cast<RoseMove*>(i_move)->setOrigin(_points[0]);
+            break;
         default:
             break;
     }
@@ -68,6 +79,9 @@ void FishCreator::update() {
     if (!_curFish) return;
     
     float create_distance = 80.0f;
+    if (_type == MoveType_Spiral) {
+        create_distance = 10.0f;
+    }
     Point i_pos = _curFish->getPosition();
     if (i_pos.getDistance(_initPos) >= create_distance) {
         createFish();

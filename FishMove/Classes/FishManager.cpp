@@ -140,7 +140,8 @@ void FishManager::loadPoints(MoveType type, std::vector<Point> &points) {
     
     if (points.size() <= 0)
     {
-        if (type == MoveType_Heart || type == MoveType_Lemniscate) {
+        if (type == MoveType_Heart || type == MoveType_Lemniscate || type == MoveType_Spiral
+            || type == MoveType_Rose) {
             points.push_back(Vec2(568, 320));
         } else {
             points.push_back(Vec2(200, 320));

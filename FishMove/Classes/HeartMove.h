@@ -10,11 +10,11 @@
 #define HeartMove_h
 
 #include <stdio.h>
-#include "ParamtricMove.h"
+#include "PolarMove.h"
 
-class HeartMove : public ParamtricMove {
+class HeartMove : public PolarMove {
 protected:
-    virtual Point getPosByTheta(float theta);
+    virtual float getRadius(float theta);
 };
 
 #endif /* HeartMove_h */

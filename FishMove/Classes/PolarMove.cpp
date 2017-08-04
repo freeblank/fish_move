@@ -1,43 +1,41 @@
 //
-//  ParamtricMove.cpp
+//  PolarMove.cpp
 //  FishMove
 //
 //  Created by FreeBlank on 17/8/3.
 //
 //
 
-#include "ParamtricMove.h"
+#include "PolarMove.h"
 
 //
-//  ParamtricMove.cpp
+//  PolarMove.cpp
 //  FishMove
 //
 //  Created by FreeBlank on 17/8/2.
 //
 //
 
-ParamtricMove::ParamtricMove() {
+PolarMove::PolarMove() {
     _theta = 0;
     
     setTotalTime(_totalTime);
 }
 
-bool ParamtricMove::setTotalTime(float time) {
+bool PolarMove::setTotalTime(float time) {
     if (!BaseMove::setTotalTime(time)) return false;
     
     _step = 2*M_PI/_totalTime;
     return true;
 }
 
-Point ParamtricMove::next(float delta, bool fix) {
+Point PolarMove::getPosByTheta(float theta) {
+    float r = getRadius(theta);
+    return Point(_origin.x+r*cosf(theta), _origin.y+r*sinf(theta));
+}
+
+Point PolarMove::next(float delta, bool fix) {
     _theta += _step*delta;
-    
-    if (_theta >= 2*M_PI) {
-        _prePos = _curPos;
-        _curPos = _origin;
-        
-        return _curPos;
-    }
     
     _calcPos = getPosByTheta(_theta);
     
@@ -45,11 +43,11 @@ Point ParamtricMove::next(float delta, bool fix) {
 }
 
 
-bool ParamtricMove::isEnd() {
+bool PolarMove::isEnd() {
     return _theta >= 2*M_PI;
 }
 
-void ParamtricMove::setOrigin(cocos2d::Vec2 origin) {
+void PolarMove::setOrigin(cocos2d::Vec2 origin) {
     _origin = origin;
     
     _curPos = getPosByTheta(_theta);

@@ -10,15 +10,15 @@
 #define LemniscateMove_h
 
 #include <stdio.h>
-#include "ParamtricMove.h"
+#include "PolarMove.h"
 
-class LemniscateMove : public ParamtricMove {
+class LemniscateMove : public PolarMove {
 public:
     virtual bool setTotalTime(float time);
     virtual Point next(float delta, bool fix=false);
 
 protected:
-    virtual Point getPosByTheta(float theta);
+    virtual float getRadius(float theta);
 };
 
 #endif /* LemniscateMove_h */

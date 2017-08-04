@@ -21,9 +21,11 @@ typedef enum _move_type
     MoveType_StraightLine,
     MoveType_Lagrange,
     MoveType_Bezier,
-    MoveType_Paramtric,
+    MoveType_Polar,
     MoveType_Heart,
-    MoveType_Lemniscate
+    MoveType_Lemniscate,
+    MoveType_Spiral,
+    MoveType_Rose
 } MoveType;
 
 class FishManager {

@@ -18,12 +18,8 @@ bool LemniscateMove::setTotalTime(float time) {
     return true;
 }
 
-Point LemniscateMove::getPosByTheta(float theta) {
-    Point pos = Point::ZERO;
-    float r = lemniscate_size*sqrtf(cosf(theta*2));
-    pos.x = _origin.x + r*cosf(_theta);
-    pos.y = _origin.y + r*sinf(_theta);
-    return pos;
+float LemniscateMove::getRadius(float theta) {
+    return lemniscate_size*sqrtf(cosf(theta*2));
 }
 
 Point LemniscateMove::next(float delta, bool fix) {
@@ -45,14 +41,15 @@ Point LemniscateMove::next(float delta, bool fix) {
     
     _curPos = BaseMove::next(delta, fix);
     
-    
-    if (_theta>=M_PI/4 && _theta<=M_PI*3/4) {
-        if (_step > 0) {
-            _theta = M_PI*5/4;
-        } else {
-            _theta = M_PI*7/4;
+    if (!fix) {
+        if (_theta>=M_PI/4 && _theta<=M_PI*3/4) {
+            if (_step > 0) {
+                _theta = M_PI*5/4;
+            } else {
+                _theta = M_PI*7/4;
+            }
+            _step *= -1;
         }
-        _step = _step*-1;
     }
 
     return _curPos;

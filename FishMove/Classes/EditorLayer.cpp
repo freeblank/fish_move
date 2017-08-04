@@ -12,6 +12,8 @@
 #include "LagrangeCurveMove.h"
 #include "HeartMove.h"
 #include "LemniscateMove.h"
+#include "SpiralMove.h"
+#include "RoseMove.h"
 
 bool EditorLayer::init() {
     if (!LayerColor::initWithColor(Color4B::BLACK)) return false;
@@ -59,8 +61,8 @@ void EditorLayer::initUI() {
     
     i_button = createButton(Button_Blue);
     i_button->setPosition(Vec2(i_x, i_y));
-    i_button->setTag(MoveType_Paramtric);
-    i_button->setTitleText("Paramtric");
+    i_button->setTag(MoveType_Polar);
+    i_button->setTitleText("Polar");
     addChild(i_button);
     i_x += i_step;
     
@@ -71,8 +73,9 @@ void EditorLayer::initUI() {
 //    addChild(i_button);
 //    i_x += i_step;
     
-    _layerParamtric = Layer::create();
-    addChild(_layerParamtric);
+    _layerPolar = Layer::create();
+    _layerPolar->setPosition(1000, 150);
+    addChild(_layerPolar);
     
     i_y = 0;
     i_step = 100;
@@ -81,28 +84,28 @@ void EditorLayer::initUI() {
     i_button->setPosition(Vec2(0, i_y));
     i_button->setTag(MoveType_Heart);
     i_button->setTitleText("Heart");
-    addChild(i_button);
+    _layerPolar->addChild(i_button);
     i_y += i_step;
     
     i_button = createButton(Button_Blue);
     i_button->setPosition(Vec2(0, i_y));
     i_button->setTag(MoveType_Lemniscate);
     i_button->setTitleText("Lemniscate");
-    addChild(i_button);
+    _layerPolar->addChild(i_button);
     i_y += i_step;
     
     i_button = createButton(Button_Blue);
     i_button->setPosition(Vec2(0, i_y));
-    i_button->setTag(MoveType_Heart);
-    i_button->setTitleText("Test3");
-    addChild(i_button);
+    i_button->setTag(MoveType_Spiral);
+    i_button->setTitleText("Spiral");
+    _layerPolar->addChild(i_button);
     i_y += i_step;
     
     i_button = createButton(Button_Blue);
     i_button->setPosition(Vec2(0, i_y));
-    i_button->setTag(MoveType_Heart);
-    i_button->setTitleText("Test4");
-    addChild(i_button);
+    i_button->setTag(MoveType_Rose);
+    i_button->setTitleText("Rose");
+    _layerPolar->addChild(i_button);
     i_y += i_step;
     
     
@@ -129,16 +132,6 @@ void EditorLayer::initUI() {
         }
     });
     addChild(i_button);
-    
-    _layerParamtric = Layer::create();
-    _layerParamtric->setAnchorPoint(Vec2::ZERO);
-    _layerParamtric->setPosition(Vec2::ZERO);
-    addChild(_layerParamtric, 1);
-    
-    _layerPolar = Layer::create();
-    _layerPolar->setAnchorPoint(Vec2::ZERO);
-    _layerPolar->setPosition(Vec2::ZERO);
-    addChild(_layerPolar, 1);
     
     _layerPoint = Layer::create();
     _layerPoint->setAnchorPoint(Vec2::ZERO);
@@ -188,7 +181,7 @@ void EditorLayer::show(bool i_show) {
 void EditorLayer::cleanEditor() {
     //hide all button
     showPolar(false);
-    showParamtric(false);
+    showPolar(false);
     
     _layerPoint->removeAllChildren();
     _drawNode->clear();
@@ -206,9 +199,13 @@ void EditorLayer::onClickButton(MoveType tag) {
             break;
         case MoveType_Bezier:
             break;
-        case MoveType_Paramtric:
-            showParamtric(true);
-            break;
+        case MoveType_Polar:
+            _selectMoveType = MoveType_Rose;
+        case MoveType_Rose:
+        case MoveType_Heart:
+        case MoveType_Spiral:
+        case MoveType_Lemniscate:
+            showPolar(true);
             break;
         default:
             break;
@@ -222,12 +219,8 @@ void EditorLayer::onClickButton(MoveType tag) {
 }
 
 void EditorLayer::showPolar(bool show) {
-    
-}
-
-void EditorLayer::showParamtric(bool show) {
-    if (_layerParamtric) {
-        _layerParamtric->setVisible(show);
+    if (_layerPolar) {
+        _layerPolar->setVisible(show);
     }
 }
 
@@ -259,6 +252,14 @@ void EditorLayer::refreshFishes() {
         case MoveType_Lemniscate:
             _move = new LemniscateMove();
             dynamic_cast<LemniscateMove*>(_move)->setOrigin(_points[0]);
+            break;
+        case MoveType_Spiral:
+            _move = new SpiralMove();
+            dynamic_cast<SpiralMove*>(_move)->setOrigin(_points[0]);
+            break;
+        case MoveType_Rose:
+            _move = new RoseMove();
+            dynamic_cast<RoseMove*>(_move)->setOrigin(_points[0]);
             break;
         default:
             break;
